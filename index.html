@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> dino
+		
+	</title>
+</head>
+<body>
+	<div id= "game">
+			<P>Press any key to get started </P>
+			<P>Current Word: <span id=" currentWord"></span> </P>
+			<p>Losses: <span id="losses"></span></p>
+	</div>
+	
+	
+	<script type="text/javascript">
+
+	var computerChoices= [ "troodon", "theropods","cerapoda"];
+	var currentWord= [];
+	var lettersAlreadyGuessed = [];
+	var guessRemaining = 9;
+	var wins = 0;
+	var losses = 0;
+	var userGuess= [];
+    
+    document.onkeyup= function(){
+
+    var computerGuess = computerChoices[Math.floor(Math.random()*computerChoices.length)];	
+	
+	
+	// for (var i=1 ; i<computerGuess.length; i++ ){
+	// 	      currentWord.push('_');
+ //             alert(currentWord);
+	// 	  }
+
+	 var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); 
+   
+    if (computerGuess.indexOf(userGuess)>-1){
+    	for (var i=1 ; i<computerGuess.length; i++ ){
+       if (computerGuess[i]===userGuess) {
+    			currentWord[i]==userGuess;
+    			wins++;
+    			guessRemaining--;
+    			alert(currentWord);
+        }
+    }
+    } else { 
+         lettersAlreadyGuessed.push(userGuess);
+         guessRemaining--;
+     } 
+      if (wins===computerGuess.length){
+    	alert("winner");
+    } else if (guessRemaining==0){
+    	alert ("looser");
+    }
+ var html = "<p> Press any key to get started .</p>" +
+                        "<p>wins: " + wins + "</p>" +
+                        "<p>letters Already Guessed: " + lettersAlreadyGuessed + "</p>" +
+                        "<p>Guesses Remaining: " + guessRemaining + "</P>" +
+                        "<p>current Word: " + currentWord + "</p>";
+                      
+
+           document.querySelector("#game").innerHTML= html;
+ 	}
+	</script>
+    
+
+</body>
+</html>
