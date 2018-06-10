@@ -8,8 +8,12 @@
 <body>
 	<div id= "game">
 			<P>Press any key to get started </P>
-			<P>Current Word: <span id=" currentWord"></span> </P>
+			<p>Correct Letters: <span id="correctLetters"></span></p>
 			<p>Losses: <span id="losses"></span></p>
+			<p>Current Word: <span id="currentWord"></span></p>
+			<p>Letters Guessed: <span id="lettersAlreadyGuessed"></span></p>
+			<p>Guess Remaining: <span id="guessRemaining"></span></p>
+			<p>Wins: <span id="wins"></span></p>
 	</div>
 	
 	
@@ -18,49 +22,82 @@
 	var computerChoices= [ "troodon", "theropods","cerapoda"];
 	var currentWord= [];
 	var lettersAlreadyGuessed = [];
-	var guessRemaining = 9;
+	var guessRemaining = 12;
+	var correctLetters = 0;
 	var wins = 0;
 	var losses = 0;
 	var userGuess= [];
+    var computerGuess = computerChoices[Math.floor(Math.random()*computerChoices.length)];
+
+	for (var i=0 ; i<computerGuess.length; i++ ){
+               currentWord.push("_");
+            //  alert(currentWord);
+          }
+
+	document.querySelector("#currentWord").innerHTML= currentWord;
+
+    document.onkeyup= function begin(){
+     
+	//  console.log('test')
     
-    document.onkeyup= function(){
+	userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	console.log('currentWord ' + currentWord)
 
-    var computerGuess = computerChoices[Math.floor(Math.random()*computerChoices.length)];	
-	
-	
-	// for (var i=1 ; i<computerGuess.length; i++ ){
-	// 	      currentWord.push('_');
- //             alert(currentWord);
-	// 	  }
-
-	 var userGuess = String.fromCharCode(event.keyCode).toLowerCase(); 
+	console.log('userGuess ' + userGuess) 
    
-    if (computerGuess.indexOf(userGuess)>-1){
-    	for (var i=1 ; i<computerGuess.length; i++ ){
-       if (computerGuess[i]===userGuess) {
-    			currentWord[i]==userGuess;
-    			wins++;
-    			guessRemaining--;
-    			alert(currentWord);
-        }
-    }
+     if (computerGuess.indexOf(userGuess)>-1){
+		 console.log('computerGuess ' + computerGuess)
+    	for (var i=0 ; i<computerGuess.length; i++ ){
+			debugger;
+           if (computerGuess[i]===userGuess) {
+        			currentWord[i] = userGuess;
+        			// wins++;
+        			guessRemaining--;
+					correctLetters++;
+        			// alert(currentWord);
+            }
+			document.querySelector("#currentWord").innerHTML= currentWord;
+			document.querySelector("#correctLetters").innerHTML= correctLetters;
+    	}
     } else { 
          lettersAlreadyGuessed.push(userGuess);
+		 document.querySelector("#lettersAlreadyGuessed").innerHTML= lettersAlreadyGuessed;
          guessRemaining--;
-     } 
-      if (wins===computerGuess.length){
-    	alert("winner");
+		document .querySelector("#guessRemaining").innerHTML= guessRemaining;
+    } 
+
+    if (wins===computerGuess.length){
+    	wins++;
+		alert("winner");
+		lettersAlreadyGuessed=[];
+		correctLetters=0;
+		
+        guessRemaining = 12;
+		document.querySelector("#wins").innerHTML= wins;
+		document.querySelector("#lettersAlreadyGuessed").innerHTML= lettersAlreadyGuessed;
+		document .querySelector("#guessRemaining").innerHTML= guessRemaining;
+		document.querySelector("#currentWord").innerHTML= currentWord;
+		document.querySelector("#correctLetters").innerHTML= correctLetters;
     } else if (guessRemaining==0){
-    	alert ("looser");
+    	losses++;
+		alert ("looser");
+		lettersAlreadyGuessed=[];
+		correctLetters=0;
+	    guessRemaining = 12;
+		document.querySelector("#losses").innerHTML= losses;
+		document.querySelector("#lettersAlreadyGuessed").innerHTML= lettersAlreadyGuessed;
+		document .querySelector("#guessRemaining").innerHTML= guessRemaining;
+	
+		document.querySelector("#correctLetters").innerHTML= correctLetters;
     }
- var html = "<p> Press any key to get started .</p>" +
-                        "<p>wins: " + wins + "</p>" +
-                        "<p>letters Already Guessed: " + lettersAlreadyGuessed + "</p>" +
-                        "<p>Guesses Remaining: " + guessRemaining + "</P>" +
-                        "<p>current Word: " + currentWord + "</p>";
+//  var html = "<p> Press any key to get started .</p>" +
+//                         "<p>wins: " + wins + "</p>" +
+//                         "<p>letters Already Guessed: " + lettersAlreadyGuessed + "</p>" +
+//                         "<p>Guesses Remaining: " + guessRemaining + "</P>" +
+//                         "<p>current Word: " + currentWord + "</p>";
                       
 
-           document.querySelector("#game").innerHTML= html;
+//            document.querySelector("#game").innerHTML= html;
  	}
 	</script>
     
